@@ -24,7 +24,7 @@ connectToDb((err) => {
     }
 })
 
-cron.schedule("*/30 * * * * *", async function () {
+cron.schedule("*/2 * * * *", async function () {
     let acc = ""
 
     const products = await db.collection('products')
