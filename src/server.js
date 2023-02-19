@@ -24,7 +24,7 @@ connectToDb((err) => {
     }
 })
 
-cron.schedule("*/2 * * * *", async function () {
+cron.schedule("5 12,18 * * *", async function () {
     let acc = ""
 
     const products = await db.collection('products')
@@ -32,9 +32,9 @@ cron.schedule("*/2 * * * *", async function () {
         .toArray();
 
     try {
-        for (const item of products) {
+        for (const [index, item] of products.entries()) {
             const res = await scrape(item.link, item.priceSelector)
-            acc += res + "\n"
+            acc += `${index}__ ${res}` + "\n"
         }
     } catch (err) {
         console.log(err.message);

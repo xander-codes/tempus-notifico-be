@@ -11,7 +11,7 @@ async function scrape(url, selector) {
     const element = await page.waitForSelector(selector);
     const price = await page.evaluate(element => element.textContent, element);
     await browser.close()
-    return price + " : " + url
+    return price + ": " + url
 }
 
 module.exports = {scrape}
