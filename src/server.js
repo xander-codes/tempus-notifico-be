@@ -19,7 +19,6 @@ let db;
 connectToDb((err) => {
     if (!err) {
         server.listen(PORT, function () {
-            console.log(`server started on http://localhost:${PORT}/`)
         })
         db = getDb()
     }
