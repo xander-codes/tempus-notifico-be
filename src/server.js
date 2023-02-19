@@ -24,11 +24,13 @@ connectToDb((err) => {
     }
 })
 
-cron.schedule("* * * * *", async function () {
+cron.schedule("*/30 * * * * *", async function () {
+    let acc = ""
+
     const products = await db.collection('products')
         .find()
         .toArray();
-    let acc = ""
+
     try {
         for (const item of products) {
             const res = await scrape(item.link, item.priceSelector)
@@ -37,7 +39,12 @@ cron.schedule("* * * * *", async function () {
     } catch (err) {
         console.log(err.message);
     }
-    sendEmail(acc)
+
+    if (acc !== '' && acc !== undefined) {
+        sendEmail(acc)
+    } else {
+        console.log('No data => no email!')
+    }
 });
 
 server.get('/products', (req, res) => {
